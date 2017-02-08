@@ -23,13 +23,14 @@ public class CNPJConverter implements Converter {
     }
 
     @Override
-    public String getAsString(FacesContext arg0, UIComponent arg1, Object valor) throws ConverterException {
+    public String getAsString(FacesContext arg0, UIComponent arg1, Object valor)
+            throws ConverterException {
         if (valor == null) {
             return "";
         }
 
         String v = valor.toString();
-        return v.substring(0, 2) + "." + v.substring(2, 5) + "." + v.substring(5, 8) + "/" + v.substring(8, 12) 
-                + "-" + v.substring(12, 14);
+//        String cnpj = v.substring(0, 2) + "." + v.substring(2, 5) + "." + v.substring(5, 8) + "/" + v.substring(8, 12) + "-" + v.substring(12, 14);
+        return v.substring(0, 2) + "." + v.substring(2, 5) + "." + v.substring(5, 8) + "/" + v.substring(8, 12) + "-" + v.substring(12, 14);
     }
 }

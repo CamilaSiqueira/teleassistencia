@@ -16,30 +16,24 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
- * Bean para construção da tela de gerência do prestador de socorro.
- *
+ *Bean para construção da tela de gerência do prestador de socorro.
  * @author Davi Lessa
  * @since 15/01/2017
  */
 @ManagedBean
 @SessionScoped
 public class PrestadorSocorroBean {
-
     private String campoBusca;
-
     private List<PrestadorSocorro> listaPrestadores = new ArrayList<>();
-
     private PrestadorSocorro prestadorSelecionado, novoPrestador;
-
-    private boolean novo;
 
     public PrestadorSocorroBean() {
         carregarPrestadores();
         prestadorSelecionado = new PrestadorSocorro();
         novoPrestador = new PrestadorSocorro();
-        novo = true;
+    
     }
-
+    
     /**
      * Carrega todos os prestadores para popular tabela.
      */
@@ -52,10 +46,10 @@ public class PrestadorSocorroBean {
             System.out.println("Erro ao carregar a lista de prestadores");
         }
     }
-
+    
     /**
-     * Busca p de restadores de socorro acordo com o campo de busca. A lista de
-     * prestadores é atualizada.
+     * Busca p de restadores de socorro acordo com o campo de busca. A lista de prestadores é
+     * atualizada.
      */
     public void buscarPrestadores() {
         try {
@@ -74,7 +68,7 @@ public class PrestadorSocorroBean {
             System.out.println("Erro ao buscar prestador por campo");
         }
     }
-
+    
     //Carrega os dados referentes ao prestador selecionado (//@TODO NECESSIDADE)
     public String abrirPrestador() throws Exception {
 //        PrestadorSocorro ps = PrestadorSocorro.obterPrestadorPorID(this.prestadorSelecionado
@@ -82,21 +76,20 @@ public class PrestadorSocorroBean {
 //        if (ps != null) {
 //
 //            listaUsuarios = new ArrayList<>(clienteSelecionado.getUsuarios());
-        novo = false;
 
-        // Redirecionando
-        FacesContext faces = FacesContext.getCurrentInstance();
-        ExternalContext context = faces.getExternalContext();
-        context.redirect("dadosprestador.xhtml");
+            // Redirecionando
+            FacesContext faces = FacesContext.getCurrentInstance();
+            ExternalContext context = faces.getExternalContext();
+            context.redirect("dadosprestador.xhtml");
 //        }
 
         return null;
     }
-
+    
     /**
      * Salva alteração de dados do prestador de socorro selecionado.
      */
-    public void alterarPrestador() throws IOException {
+    public void alterarPrestador() {
         try {
             PrestadorSocorro.atualizar(prestadorSelecionado);
         } catch (Exception e) {
@@ -106,16 +99,10 @@ public class PrestadorSocorroBean {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-        carregarPrestadores();
-
         context.addMessage(null, new FacesMessage("Sucesso",
                 "A alteração foi efetuada com sucesso."));
-
-        context.getExternalContext().getFlash().setKeepMessages(true);
-
-        context.getExternalContext().redirect("buscaprestador.xhtml");
     }
-
+    
     /**
      * Exclui um cliente final e seus dados do banco.
      *
@@ -146,7 +133,7 @@ public class PrestadorSocorroBean {
 
         return null;
     }
-
+    
     /**
      * Salva o novo cliente no banco de dados.
      *
@@ -207,22 +194,6 @@ public class PrestadorSocorroBean {
     public void setNovoPrestador(PrestadorSocorro novoPrestador) {
         this.novoPrestador = novoPrestador;
     }
-
-    /**
-     * Abre a página responsável pelo cadastro, alterando também o valor do
-     * atributo que indica se o objeto é novo ou é uma alteração.
-     *
-     * @throws IOException
-     */
-    public void abrirNovoPrestador() throws IOException {
-        novo = true;
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        context.getExternalContext().redirect("dadosprestador.xhtml");
-    }
-
-    public boolean isNovo() {
-        return novo;
-    }
+    
+    
 }
